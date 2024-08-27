@@ -40,4 +40,12 @@ public class UserController {
         // Chama o serviço para salvar o usuário e retorna a resposta.
         return userService.save(userRequestDto);
     }
+
+    @PutMapping("/{id}")
+    public UserResponseDto update(
+            @PathVariable long id,
+            @RequestBody UserRequestDto userRequestDto
+    ){
+        return userService.update(id, userRequestDto)
+    }
 }

@@ -54,10 +54,36 @@ public class UserServiceImpl implements UserServiceInterface {
         UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setId(savedUser.getId());
         userResponseDto.setName(savedUser.getName());
+        userResponseDto.setEmail(savedUser.getEmail());
         userResponseDto.setCpf_cnpj(savedUser.getCpf_cnpj());
-        userResponseDto.setPassword(savedUser.getEmail());
+        userResponseDto.setPassword(savedUser.getPassword());
 
         // Retorna o DTO com as informações do usuário salvo.
         return userResponseDto;
     }
+
+    @Override
+    public UserResponseDto update(Long id, UserRequestDto userRequestDto) {
+        User userExist = userRepository.findById(id).orElseThrow();
+
+        userExist.setName(userRequestDto.getName());
+        userExist.setCpf_cnpj(userRequestDto.getCpf_cnpj());
+        userExist.setPassword(userRequestDto.getPassword());
+        userExist.setEmail(userRequestDto.getEmail());
+
+        userRepository.save(userExist);
+
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setId(savedUser.getId());
+        userResponseDto.setName(savedUser.getName());
+        userResponseDto.setCpf_cnpj(savedUser.getCpf_cnpj());
+        userResponseDto.setPassword(savedUser.getPassword());
+
+        // Retorna o DTO com as informações do usuário salvo.
+        return userResponseDto;
+
+
+
+    }
+
 }
