@@ -56,79 +56,56 @@ public class UserServiceImpl implements UserServiceInterface {
         // Salva o usuário no banco de dados e obtém a entidade persistida com o ID gerado.
         User savedUser = userRepository.save(user);
 
-        // Cria um DTO de resposta com as informações do usuário salvo.
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setUser_id(savedUser.getUser_id());
-        userResponseDto.setName(savedUser.getName());
-        userResponseDto.setEmail(savedUser.getEmail());
-        userResponseDto.setPassword(savedUser.getPassword());
-        userResponseDto.setCep(savedUser.getPassword());
-        userResponseDto.setCpf(savedUser.getCpf());
-        userResponseDto.setIs_active(savedUser.getIs_active());
 
         // Retorna o DTO com as informações do usuário salvo.
-        return userResponseDto;
+        return this.getUserResponseDto(user);
     }
 
     @Override
     public UserResponseDto update(Long id, UserRequestDto userRequestDto) {
-        User updateUser = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow();
 
-        updateUser.setName(userRequestDto.getName());
-        updateUser.setEmail(userRequestDto.getEmail());
-        updateUser.setPassword(userRequestDto.getPassword());
-        updateUser.setCep(userRequestDto.getCep());
-        updateUser.setCpf(userRequestDto.getCpf());
+        user.setName(userRequestDto.getName());
+        user.setEmail(userRequestDto.getEmail());
+        user.setPassword(userRequestDto.getPassword());
+        user.setCep(userRequestDto.getCep());
+        user.setCpf(userRequestDto.getCpf());
+        user.setIs_active(Boolean.TRUE);
 
-        userRepository.save(updateUser);
+        userRepository.save(user);
 
-        UserResponseDto userResponseDto = new UserResponseDto();
-
-        userResponseDto.setUser_id(updateUser.getUser_id());
-        userResponseDto.setName(updateUser.getName());
-        userResponseDto.setEmail(updateUser.getEmail());
-        userResponseDto.setPassword(updateUser.getPassword());
-        userResponseDto.setCep(updateUser.getCep());
-        userResponseDto.setCpf(updateUser.getCpf());
-        userResponseDto.setIs_active(updateUser.getIs_active());
-
-        return userResponseDto;
+        return getUserResponseDto(user);
     }
+
 
     @Override
     public UserResponseDto getId(Long id) {
-        User userById = userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow();
 
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setUser_id(userById.getUser_id());
-        userResponseDto.setName(userById.getName());
-        userResponseDto.setEmail(userById.getEmail());
-        userResponseDto.setPassword(userById.getPassword());
-        userResponseDto.setCep(userById.getCep());
-        userResponseDto.setCpf(userById.getCpf());
-        userResponseDto.setIs_active(userById.getIs_active());
-
-        return userResponseDto;
+        return getUserResponseDto(user);
     }
 
     @Override
     public UserResponseDto setActive(long id, UserRequestDto is_active) {
-       User setActiveUser = userRepository.findById(id).orElseThrow();
+       User user = userRepository.findById(id).orElseThrow();
 
-       setActiveUser.setIs_active(is_active.getIs_active());
+       user.setIs_active(is_active.getIs_active());
+       userRepository.save(user);
 
-       userRepository.save(setActiveUser);
+       return getUserResponseDto(user);
+    }
 
-       UserResponseDto userResponseDto = new UserResponseDto();
+    private UserResponseDto getUserResponseDto(User user) {
+        UserResponseDto userResponseDto = new UserResponseDto();
 
-        userResponseDto.setUser_id(setActiveUser.getUser_id());
-        userResponseDto.setName(setActiveUser.getName());
-        userResponseDto.setEmail(setActiveUser.getEmail());
-        userResponseDto.setPassword(setActiveUser.getPassword());
-        userResponseDto.setCep(setActiveUser.getCep());
-        userResponseDto.setCpf(setActiveUser.getCpf());
-        userResponseDto.setIs_active(setActiveUser.getIs_active());
+        userResponseDto.setUser_id(user.getUser_id());
+        userResponseDto.setName(user.getName());
+        userResponseDto.setEmail(user.getEmail());
+        userResponseDto.setPassword(user.getPassword());
+        userResponseDto.setCep(user.getCep());
+        userResponseDto.setCpf(user.getCpf());
+        userResponseDto.setIs_active(user.getIs_active());
 
-       return userResponseDto;
+        return userResponseDto;
     }
 }
