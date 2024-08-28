@@ -7,6 +7,8 @@ import com.api_vendinha.api.domain.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Implementação do serviço de usuários.
  *
@@ -48,6 +50,7 @@ public class UserServiceImpl implements UserServiceInterface {
         user.setPassword(userRequestDto.getPassword());
         user.setCep(userRequestDto.getCep());
         user.setCpf(userRequestDto.getCpf());
+        user.setIs_active(Boolean.TRUE);
 
 
         // Salva o usuário no banco de dados e obtém a entidade persistida com o ID gerado.
@@ -61,6 +64,7 @@ public class UserServiceImpl implements UserServiceInterface {
         userResponseDto.setPassword(savedUser.getPassword());
         userResponseDto.setCep(savedUser.getPassword());
         userResponseDto.setCpf(savedUser.getCpf());
+        userResponseDto.setIs_active(savedUser.getIs_active());
 
         // Retorna o DTO com as informações do usuário salvo.
         return userResponseDto;
@@ -68,16 +72,63 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserResponseDto update(Long id, UserRequestDto userRequestDto) {
-        User found = userRepository.findById(id).orElseThrow();
+        User updateUser = userRepository.findById(id).orElseThrow();
+
+        updateUser.setName(userRequestDto.getName());
+        updateUser.setEmail(userRequestDto.getEmail());
+        updateUser.setPassword(userRequestDto.getPassword());
+        updateUser.setCep(userRequestDto.getCep());
+        updateUser.setCpf(userRequestDto.getCpf());
+
+        userRepository.save(updateUser);
 
         UserResponseDto userResponseDto = new UserResponseDto();
 
-        found.setName(userResponseDto.getName());
-        found.setEmail(userResponseDto.getEmail());
-        found.setPassword(userResponseDto.getPassword());
-        found.setCep(userResponseDto.getCep());
-        found.setCpf(userResponseDto.getCpf());
+        userResponseDto.setUser_id(updateUser.getUser_id());
+        userResponseDto.setName(updateUser.getName());
+        userResponseDto.setEmail(updateUser.getEmail());
+        userResponseDto.setPassword(updateUser.getPassword());
+        userResponseDto.setCep(updateUser.getCep());
+        userResponseDto.setCpf(updateUser.getCpf());
+        userResponseDto.setIs_active(updateUser.getIs_active());
 
         return userResponseDto;
+    }
+
+    @Override
+    public UserResponseDto getId(Long id) {
+        User userById = userRepository.findById(id).orElseThrow();
+
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setUser_id(userById.getUser_id());
+        userResponseDto.setName(userById.getName());
+        userResponseDto.setEmail(userById.getEmail());
+        userResponseDto.setPassword(userById.getPassword());
+        userResponseDto.setCep(userById.getCep());
+        userResponseDto.setCpf(userById.getCpf());
+        userResponseDto.setIs_active(userById.getIs_active());
+
+        return userResponseDto;
+    }
+
+    @Override
+    public UserResponseDto setActive(long id, UserRequestDto is_active) {
+       User setActiveUser = userRepository.findById(id).orElseThrow();
+
+       setActiveUser.setIs_active(is_active.getIs_active());
+
+       userRepository.save(setActiveUser);
+
+       UserResponseDto userResponseDto = new UserResponseDto();
+
+        userResponseDto.setUser_id(setActiveUser.getUser_id());
+        userResponseDto.setName(setActiveUser.getName());
+        userResponseDto.setEmail(setActiveUser.getEmail());
+        userResponseDto.setPassword(setActiveUser.getPassword());
+        userResponseDto.setCep(setActiveUser.getCep());
+        userResponseDto.setCpf(setActiveUser.getCpf());
+        userResponseDto.setIs_active(setActiveUser.getIs_active());
+
+       return userResponseDto;
     }
 }

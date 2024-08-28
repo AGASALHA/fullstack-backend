@@ -45,4 +45,19 @@ public class UserController {
     ){
         return userService.update(id, userRequestDto);
     }
+
+    @GetMapping("/{id}")
+    public UserResponseDto userById(
+            @PathVariable long id
+    ){
+        return userService.getId(id);
+    }
+
+    @PutMapping("/{id}/status")
+    public UserResponseDto setActive(
+            @PathVariable long id,
+            @RequestBody UserRequestDto is_active
+    ){
+        return userService.setActive(id, is_active);
+    }
 }
