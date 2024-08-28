@@ -46,4 +46,7 @@ public class User {
 
     @Column(nullable = false)
     private String cep;
+
+    @Column
+    private Boolean is_active;
 }
