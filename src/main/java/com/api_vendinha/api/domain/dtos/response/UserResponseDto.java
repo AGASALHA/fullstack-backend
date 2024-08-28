@@ -12,4 +12,5 @@ public class UserResponseDto {
     private String password;
     private String cpf;
     private String cep;
+    private Boolean is_active;
 }
