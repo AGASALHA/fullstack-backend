@@ -6,9 +6,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserResponseDto {
-    private Long id;
+    private Long user_id;
     private String name;
     private String email;
     private String password;
-    private String cpf_cnpj;
+    private String cpf;
+    private String cep;
 }

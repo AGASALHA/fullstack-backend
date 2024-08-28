@@ -25,7 +25,7 @@ public class User {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Define que o valor do ID será gerado automaticamente pelo banco de dados (auto-incremento).
-    private Long id;
+    private Long user_id;
 
     /**
      * Nome do usuário.
@@ -42,5 +42,8 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private String cpf_cnpj;
+    private String cpf;
+
+    @Column(nullable = false)
+    private String cep;
 }

@@ -44,19 +44,23 @@ public class UserServiceImpl implements UserServiceInterface {
         User user = new User();
         // Define o nome do usuário a partir do DTO.
         user.setName(userRequestDto.getName());
-        user.setCpf_cnpj(userRequestDto.getCpf_cnpj());
         user.setEmail(userRequestDto.getEmail());
+        user.setPassword(userRequestDto.getPassword());
+        user.setCep(userRequestDto.getCep());
+        user.setCpf(userRequestDto.getCpf());
+
 
         // Salva o usuário no banco de dados e obtém a entidade persistida com o ID gerado.
         User savedUser = userRepository.save(user);
 
         // Cria um DTO de resposta com as informações do usuário salvo.
         UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setId(savedUser.getId());
+        userResponseDto.setUser_id(savedUser.getUser_id());
         userResponseDto.setName(savedUser.getName());
         userResponseDto.setEmail(savedUser.getEmail());
-        userResponseDto.setCpf_cnpj(savedUser.getCpf_cnpj());
         userResponseDto.setPassword(savedUser.getPassword());
+        userResponseDto.setCep(savedUser.getPassword());
+        userResponseDto.setCpf(savedUser.getCpf());
 
         // Retorna o DTO com as informações do usuário salvo.
         return userResponseDto;
@@ -64,26 +68,16 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserResponseDto update(Long id, UserRequestDto userRequestDto) {
-        User userExist = userRepository.findById(id).orElseThrow();
-
-        userExist.setName(userRequestDto.getName());
-        userExist.setCpf_cnpj(userRequestDto.getCpf_cnpj());
-        userExist.setPassword(userRequestDto.getPassword());
-        userExist.setEmail(userRequestDto.getEmail());
-
-        userRepository.save(userExist);
+        User found = userRepository.findById(id).orElseThrow();
 
         UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setId(savedUser.getId());
-        userResponseDto.setName(savedUser.getName());
-        userResponseDto.setCpf_cnpj(savedUser.getCpf_cnpj());
-        userResponseDto.setPassword(savedUser.getPassword());
 
-        // Retorna o DTO com as informações do usuário salvo.
+        found.setName(userResponseDto.getName());
+        found.setEmail(userResponseDto.getEmail());
+        found.setPassword(userResponseDto.getPassword());
+        found.setCep(userResponseDto.getCep());
+        found.setCpf(userResponseDto.getCpf());
+
         return userResponseDto;
-
-
-
     }
-
 }
