@@ -18,5 +18,7 @@ public class UserRequestDto {
     private String name;
     private String email;
     private String password;
-    private String cpf_cnpj;
+    private String cpf;
+    private String cep;
+    private Boolean is_active;
 }
