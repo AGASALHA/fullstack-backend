@@ -14,17 +14,17 @@ CREATE TABLE PETS (
     NAME VARCHAR(255) NOT NULL,
     DATA_ADOCAO DATE NOT NULL,
     RACA VARCHAR(50) NOT NULL,
-    SEXO INTEGER NOT NULL, --Visando eficiencia será salvo em int p/ tipo
-    PORTE INTEGER NOT NULL, --Visando eficiencia será salvo em int p/ tipo
-    TEMPERAMENTO INTEGER NOT NULL, --Visando eficiencia será salvo em int p/ tipo
-    COR_PELO INTEGER NOT NULL,
+    SEXO INTEGER NOT NULL, -- 0 = indefinido, 1 = femea, 2 = macho
+    PORTE INTEGER NOT NULL, -- 0 = pequeno, 1 = medio, 2 = grande
+    TEMPERAMENTO INTEGER NOT NULL, --0 = normal, 1 = agressivo, 2 = assustado
+    COR INTEGER NOT NULL, --0 = preto, 1 = branco, 2 = marrom
     DATA_NASC DATE
 );
 
 CREATE TABLE QRCODES (
     QR_ID INTEGER PRIMARY KEY AUTO_INCREMENT,
     PET_ID INTEGER REFERENCES PETS(PET_ID) UNIQUE,
-    LINK VARCHAR(355),
+    CODE VARCHAR(355),
     DATA_ATIVACAO DATETIME,
     STATUS_ATIVO BOOLEAN
 );

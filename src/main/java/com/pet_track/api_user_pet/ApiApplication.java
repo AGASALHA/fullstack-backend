@@ -1,4 +1,4 @@
-package com.api_vendinha.api;
+package com.pet_track.api_user_pet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
